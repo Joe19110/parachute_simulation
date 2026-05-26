@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 # Physical constants
 g = 9.81
@@ -26,6 +26,12 @@ A_para = 40.0
 wind_speed = 0.0
 v_safe = 5.0
 
+# Drop mode: "freefall", "plane", "helicopter"
+drop_mode = "freefall"
+
+# Vehicle behaviour after drop: "fly_away" or "stay"
+vehicle_behavior = "fly_away"
+
 
 @dataclass
 class SimulationParams:
@@ -45,4 +51,5 @@ class SimulationParams:
     A_para: float = A_para
     wind_speed: float = wind_speed
     v_safe: float = v_safe
-
+    drop_mode: str = drop_mode
+    vehicle_behavior: str = vehicle_behavior
