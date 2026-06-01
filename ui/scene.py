@@ -298,7 +298,8 @@ def update_axes(ax, scene, params, data, horiz_col, wind_spd, wind_label_txt):
 
 def reset_scene(scene):
     """Hide/clear all animated artists back to their idle state."""
-    for obj in (scene["canopy"], scene["harness"],
+    for obj in (scene["head"], scene["helmet"],
+                scene["canopy"], scene["harness"],
                 scene["eye_L"], scene["eye_R"],
                 scene["pupil_L"], scene["pupil_R"]):
         obj.set_visible(False)

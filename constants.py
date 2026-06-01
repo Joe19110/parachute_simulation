@@ -22,15 +22,15 @@ h_open = 800.0
 Cd_free = 1.0
 A_free = 0.7
 Cd_para = 1.5
-A_para = 40.0
+A_para = 60.0
 
 # Glide parameters (only for ram-air)
 glide_ratio = 0.0   # L/D forward glide; 0 = no glide (round chutes)
 glide_az = 0.0      # Same for z-axis
 
 # Wind
-wind_x = 5.0        # horizontal wind (x direction, m/s)
-wind_z = -3.0       # crosswind (z direction, m/s)
+wind_x = 2.0        # horizontal wind (x direction, m/s)
+wind_z = 0.0       # crosswind (z direction, m/s)
 wind_shear = False  # If true, wind scales down linearly from h0 to 0 at the ground
 
 # Safety threshold
@@ -55,7 +55,7 @@ cushion_size_z = 20.0  # width of the safe zone in Z (m)
 # ── Parachute shape presets ───────────────────────────────────────────────────
 # Each entry: (Cd_para, A_para, glide_ratio, glide_az, visual)
 PARACHUTE_SHAPES = {
-    "Round":      (1.5,  40.0,  0.0,  0.0, "round"),
+    "Round":      (1.5,  60.0,  0.0,  0.0, "round"),
     "Ram-Air":    (0.8,  25.0,  2.5,  0.0, "ramair"),
     "Cruciform":  (1.6,  45.0,  0.0,  0.0, "cruciform"),
     "Annular":    (1.2,  50.0,  0.0,  0.0, "annular"),

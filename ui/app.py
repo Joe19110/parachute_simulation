@@ -248,8 +248,8 @@ def launch_ui():
         try:
             tx = float(target_entries["tx"].get())
             tz = float(target_entries["tz"].get())
-            sz_x = float(target_entries["cushion_size_x"].get())
-            sz_z = float(target_entries["cushion_size_z"].get())
+            sz_x = float(target_entries["cushion_size_x"].get()) / 2.0
+            sz_z = float(target_entries["cushion_size_z"].get()) / 2.0
         except Exception:
             return
             
@@ -342,10 +342,25 @@ def launch_ui():
             ah = 450; yr = params.h0 + 60
         fo  = (9 + 12 + 20) * (yr / ah)
 
-        fv      = final_speed(data, ground_y=fo)
+        # Physics calculations should evaluate at actual ground (y=0),
+        # not the visual "feet offset" which changes with zoom level.
+        fv      = final_speed(data, ground_y=0.0)
         is_safe = fv <= params.v_safe
-        lx, lz  = landing_position(data, ground_y=fo)
-        ft      = flight_time(data, ground_y=fo)
+        lx, lz  = landing_position(data, ground_y=0.0)
+        
+        if cushion_enabled.get():
+            try:
+                tx = float(target_entries["tx"].get())
+                tz = float(target_entries["tz"].get())
+                sz_x = float(target_entries["cushion_size_x"].get()) / 2.0
+                sz_z = float(target_entries["cushion_size_z"].get()) / 2.0
+                # If they land within the cushion, consider it a safe landing
+                if abs(lx - tx) <= sz_x and abs(lz - tz) <= sz_z:
+                    is_safe = True
+            except Exception:
+                pass
+                
+        ft      = flight_time(data, ground_y=0.0)
         ms      = max_speed(data)
 
         rvars["final_speed"][0].set(f"{fv:.2f} m/s")
@@ -401,8 +416,8 @@ def launch_ui():
             jump_x_var.set("—")
             jump_z_var.set("—")
 
-        _update_results(data, params)
         anim.reset(params, data)
+        _update_results(data, params)
         anim.start()
 
     def auto_jump():
@@ -431,6 +446,7 @@ def launch_ui():
         latest_params["value"] = params
         latest_data["value"]   = data
         anim.reset(params, data)
+        _update_results(data, params)
         anim.start()
 
     # ── Wire buttons — 2 rows so text never gets clipped ────────────────
